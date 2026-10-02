@@ -1,0 +1,404 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* ── light theme (default) — Vercel-grade paper, violet identity ── */
+:root {
+  color-scheme: light;
+  --radius: 0.75rem;
+
+  --background: #fafafa;
+  --foreground: #17171c;
+  --card: #ffffff;
+  --card-foreground: #17171c;
+  --popover: #ffffff;
+  --popover-foreground: #17171c;
+  --primary: #7c3aed;
+  --primary-foreground: #ffffff;
+  --secondary: #f4f4f6;
+  --secondary-foreground: #26262e;
+  --muted: #f4f4f6;
+  --muted-foreground: #4b4b58;
+  --accent: #f2f1f8;
+  --accent-foreground: #24232f;
+  --destructive: #dc2626;
+  --border: rgba(23, 23, 28, 0.09);
+  --input: rgba(23, 23, 28, 0.14);
+  --ring: rgba(124, 58, 237, 0.45);
+
+  /* signature hues — one step deeper in light (600 band) */
+  --ax-violet: #7c3aed;
+  --ax-fuchsia: #c026d3;
+  --ax-iris: #8b5cf6;
+  --ax-amber: #d97706;
+  --ax-teal: #0d9488;
+
+  /* elevation surfaces */
+  --ax-panel: #ffffff;
+  --ax-raised: #f4f4f6;
+  --ax-deep: #eeedf3;
+
+  /* effect channels — the tokens flip, the geometry never does */
+  --ax-grid-line: rgba(23, 23, 28, 0.05);
+  --ax-dots-dot: rgba(23, 23, 28, 0.13);
+  --ax-rule-line: rgba(23, 23, 28, 0.1);
+  --ax-glow-a: rgba(124, 58, 237, 0.1);
+  --ax-glow-b: rgba(192, 38, 211, 0.07);
+  --ax-grad-1: #7c3aed;
+  --ax-grad-2: #c026d3;
+  --ax-grad-3: #db2777;
+  --ax-noise-opacity: 0.04;
+  --ax-noise-blend: multiply;
+  --ax-scrollbar: rgba(23, 23, 28, 0.18);
+  --selection-bg: rgba(124, 58, 237, 0.18);
+  --selection-fg: #17171c;
+
+  /* dark demo islands get seated (ring + layered drop shadow) on paper */
+  --ax-stage-seat:
+    0 1px 2px rgba(23, 23, 28, 0.1),
+    0 8px 24px -8px rgba(23, 23, 28, 0.14),
+    0 24px 64px -24px rgba(23, 23, 28, 0.22),
+    0 0 0 1px rgba(23, 23, 28, 0.08);
+  --ax-band: #f4f4f6;
+  --ax-band-border: rgba(23, 23, 28, 0.08);
+}
+
+/* ── dark theme — near-black with a violet cast (the original) ── */
+.dark {
+  color-scheme: dark;
+
+  --background: #050507;
+  --foreground: #f5f5f7;
+  --card: #0a0a0e;
+  --card-foreground: #f5f5f7;
+  --popover: #0c0c11;
+  --popover-foreground: #f5f5f7;
+  --primary: #a78bfa;
+  --primary-foreground: #0b0618;
+  --secondary: #14141b;
+  --secondary-foreground: #e4e4ec;
+  --muted: #101016;
+  --muted-foreground: #8e8e9c;
+  --accent: #171721;
+  --accent-foreground: #f0f0f5;
+  --destructive: #f87171;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: rgba(167, 139, 250, 0.55);
+
+  --ax-violet: #8b5cf6;
+  --ax-fuchsia: #e879f9;
+  --ax-iris: #a78bfa;
+  --ax-amber: #fbbf24;
+  --ax-teal: #2dd4bf;
+
+  --ax-panel: #0a0a0e;
+  --ax-raised: #101017;
+  --ax-deep: #080809;
+
+  --ax-grid-line: rgba(255, 255, 255, 0.04);
+  --ax-dots-dot: rgba(255, 255, 255, 0.09);
+  --ax-rule-line: rgba(255, 255, 255, 0.14);
+  --ax-glow-a: rgba(139, 92, 246, 0.16);
+  --ax-glow-b: rgba(232, 121, 249, 0.1);
+  --ax-grad-1: #c4b5fd;
+  --ax-grad-2: #e879f9;
+  --ax-grad-3: #f0abfc;
+  --ax-noise-opacity: 0.032;
+  --ax-noise-blend: normal;
+  --ax-scrollbar: rgba(255, 255, 255, 0.12);
+  --selection-bg: rgba(139, 92, 246, 0.35);
+  --selection-fg: #ffffff;
+
+  /* deep elevation + rim hairline — dark islands over the dark page */
+  --ax-stage-seat:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 16px 48px -16px rgba(0, 0, 0, 0.7),
+    0 32px 96px -40px rgba(0, 0, 0, 0.75);
+  --ax-band: #070709;
+  --ax-band-border: rgba(255, 255, 255, 0.06);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "cv11";
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+  ::selection {
+    background: var(--selection-bg);
+    color: var(--selection-fg);
+  }
+}
+
+/* ─────────────────────────  axiom utilities  ───────────────────────── */
+
+/* ── micro-typography system ─────────────────────────────
+   One label language for the whole site. Every mono eyebrow,
+   corner chrome tag and metadata badge routes through these two
+   classes — no per-instance tracking values. */
+.ax-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.2;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+.ax-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+/* hairline gradient separator used between sections */
+.ax-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--ax-rule-line) 20%,
+    var(--ax-rule-line) 80%,
+    transparent
+  );
+}
+
+/* 1px grid, masked so it dies before the edges */
+.ax-grid {
+  background-image:
+    linear-gradient(to right, var(--ax-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--ax-grid-line) 1px, transparent 1px);
+  background-size: 72px 72px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 30%, transparent 78%);
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 30%, transparent 78%);
+}
+
+/* the same grid for dark islands (CTA panel, dark bands) — lines stay white */
+.ax-gridlite {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 72px 72px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 30%, transparent 78%);
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 30%, transparent 78%);
+}
+
+/* fine dotted texture for demo stages (stages stay dark, so white dots) */
+.ax-dots {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+/* film grain overlay */
+.ax-noise {
+  position: relative;
+}
+.ax-noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--ax-noise-opacity);
+  mix-blend-mode: var(--ax-noise-blend);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'%3E%3C/svg%3E");
+}
+
+/* gradient display text — 300 band on dark, 600 band on paper.
+   Two visible stops (the third exits the box); depth comes from
+   hue travel, not saturation. Descender guard: tight leading +
+   background-clip clips g/y/p tails, so pad the box and pull the
+   following line back up. */
+.ax-grad {
+  background: linear-gradient(104deg, var(--ax-grad-1) 8%, var(--ax-grad-2) 82%, var(--ax-grad-3) 140%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+/* soft aurora glows — the single ambient loop of the page */
+.ax-aurora {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.ax-aurora::before,
+.ax-aurora::after {
+  content: "";
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(110px);
+}
+.ax-aurora::before {
+  width: 640px;
+  height: 640px;
+  top: -320px;
+  left: 50%;
+  translate: -50% 0;
+  background: radial-gradient(circle, var(--ax-glow-a), transparent 65%);
+  animation: ax-breathe-a 26s ease-in-out infinite;
+}
+.ax-aurora::after {
+  width: 520px;
+  height: 520px;
+  bottom: -300px;
+  left: 30%;
+  background: radial-gradient(circle, var(--ax-glow-b), transparent 65%);
+  animation: ax-breathe-b 34s ease-in-out infinite;
+}
+
+@keyframes ax-breathe-a {
+  0%, 100% { transform: translate(-50%, 0) scale(1); opacity: 0.9; }
+  50% { transform: translate(-46%, 40px) scale(1.12); opacity: 1; }
+}
+@keyframes ax-breathe-b {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+  50% { transform: translate(60px, -30px) scale(1.15); opacity: 1; }
+}
+
+/* slow marquee */
+.ax-marquee {
+  animation: ax-marquee 42s linear infinite;
+}
+.ax-marquee-rev {
+  animation: ax-marquee 42s linear infinite reverse;
+}
+.ax-marquee-host:hover .ax-marquee,
+.ax-marquee-host:hover .ax-marquee-rev,
+.ax-marquee-host:focus-within .ax-marquee,
+.ax-marquee-host:focus-within .ax-marquee-rev {
+  animation-play-state: paused;
+}
+@keyframes ax-marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* gentle float for hero cube */
+@keyframes ax-float {
+  0%, 100% { transform: translateY(-6px); }
+  50% { transform: translateY(10px); }
+}
+
+/* beam border — gradient fillet riding the outline on an offset-path */
+.ax-beam {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  overflow: hidden;
+}
+.ax-beam::before {
+  content: "";
+  position: absolute;
+  width: 42px;
+  aspect-ratio: 1;
+  background: linear-gradient(to left, var(--ax-violet), var(--ax-fuchsia), transparent);
+  animation: ax-beam-move var(--beam-dur, 6s) linear infinite;
+  offset-path: rect(0 auto auto 0 round 999px);
+  offset-anchor: 50% 50%;
+}
+@keyframes ax-beam-move {
+  100% { offset-distance: 100%; }
+}
+
+/* the demo stage — a deliberate dark island in BOTH themes.
+   Components render against near-black so their light work is
+   never re-tuned per theme. Depth recipe: faint violet bloom up
+   top, a barely-lighter ceiling, and an inset top light so the
+   surface reads as material, not a black hole. */
+.ax-stage {
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 30%, rgba(139, 92, 246, 0.07), transparent 70%),
+    linear-gradient(180deg, #0a0a10 0%, #08080b 42%);
+}
+/* inset top light — reads as a lit ceiling, painted under the
+   children (pseudo-element precedes them in paint order) */
+.ax-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* seat shadow for dark islands — grounds them on light paper,
+   gives them altitude over the dark page. NOTE: the ring lives
+   inside the token (last layer) because this unlayered rule
+   intentionally overrides the tailwind ring/shadow chain —
+   don't pair .ax-seat with ring- utilities. */
+.ax-seat {
+  box-shadow: var(--ax-stage-seat);
+}
+
+/* page-level band tint (marquee, dimension band, footer) */
+.ax-band {
+  background: var(--ax-band);
+  border-color: var(--ax-band-border);
+}
+
+/* scrollbar polish for long lists */
+.ax-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.ax-scroll::-webkit-scrollbar-thumb {
+  background: var(--ax-scrollbar);
+  border-radius: 8px;
+}
+.ax-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ax-marquee,
+  .ax-marquee-rev,
+  .ax-aurora::before,
+  .ax-aurora::after,
+  .ax-beam::before {
+    animation: none;
+  }
+}
