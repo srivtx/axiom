@@ -70,8 +70,8 @@
   --ax-grid-line: rgba(23, 23, 28, 0.035);
   --ax-dots-dot: rgba(23, 23, 28, 0.13);
   --ax-rule-line: rgba(23, 23, 28, 0.1);
-  --ax-glow-a: rgba(79, 70, 229, 0.09);
-  --ax-glow-b: rgba(14, 165, 233, 0.06);
+  --ax-glow-a: rgba(79, 70, 229, 0.13);
+  --ax-glow-b: rgba(14, 165, 233, 0.09);
   --ax-grad-1: #4f46e5;
   --ax-grad-2: #7c3aed;
   --ax-grad-3: #0284c7;
@@ -82,9 +82,9 @@
      passing sheen, photographic grain, cursor spotlight */
   --ax-halo-a: rgba(99, 102, 241, 0.16);
   --ax-halo-b: rgba(56, 189, 248, 0.12);
-  --ax-glass-bg: rgba(255, 255, 255, 0.76);
+  --ax-glass-bg: rgba(255, 255, 255, 0.8);
   --ax-glass-line: rgba(23, 23, 28, 0.09);
-  --ax-glass-top: rgba(255, 255, 255, 0.9);
+  --ax-glass-top: rgba(255, 255, 255, 0.95);
   --ax-glass-float:
     0 1px 2px rgba(23, 23, 28, 0.06),
     0 12px 32px -12px rgba(23, 23, 28, 0.14),
@@ -112,19 +112,21 @@
 .dark {
   color-scheme: dark;
 
-  --background: #050507;
+  /* deep-space canvas — blue-shifted, not neutral black. Light
+     work shows against a tinted field; neutral black reads dead. */
+  --background: #060812;
   --foreground: #f5f5f7;
-  --card: #0a0a0e;
+  --card: #0a0c16;
   --card-foreground: #f5f5f7;
-  --popover: #0c0c11;
+  --popover: #0c0f1a;
   --popover-foreground: #f5f5f7;
   --primary: #a78bfa;
   --primary-foreground: #0b0618;
-  --secondary: #14141b;
+  --secondary: #15162a;
   --secondary-foreground: #e4e4ec;
-  --muted: #101016;
+  --muted: #101224;
   --muted-foreground: #8e8e9c;
-  --accent: #171721;
+  --accent: #181a30;
   --accent-foreground: #f0f0f5;
   --destructive: #f87171;
   --border: rgba(255, 255, 255, 0.08);
@@ -137,15 +139,15 @@
   --ax-amber: #fbbf24;
   --ax-teal: #2dd4bf;
 
-  --ax-panel: #0a0a0e;
-  --ax-raised: #101017;
-  --ax-deep: #080809;
+  --ax-panel: #0a0c16;
+  --ax-raised: #10121e;
+  --ax-deep: #08090f;
 
   --ax-grid-line: rgba(255, 255, 255, 0.05);
   --ax-dots-dot: rgba(255, 255, 255, 0.09);
   --ax-rule-line: rgba(255, 255, 255, 0.14);
-  --ax-glow-a: rgba(99, 102, 241, 0.17);
-  --ax-glow-b: rgba(56, 189, 248, 0.1);
+  --ax-glow-a: rgba(99, 102, 241, 0.4);
+  --ax-glow-b: rgba(56, 189, 248, 0.26);
   --ax-grad-1: #818cf8;
   --ax-grad-2: #a78bfa;
   --ax-grad-3: #7dd3fc;
@@ -156,9 +158,9 @@
      Dark values read as light sources on a dark field. */
   --ax-halo-a: rgba(139, 92, 246, 0.24);
   --ax-halo-b: rgba(56, 189, 248, 0.16);
-  --ax-glass-bg: rgba(17, 17, 28, 0.52);
-  --ax-glass-line: rgba(255, 255, 255, 0.11);
-  --ax-glass-top: rgba(255, 255, 255, 0.11);
+  --ax-glass-bg: rgba(20, 22, 38, 0.75);
+  --ax-glass-line: rgba(255, 255, 255, 0.13);
+  --ax-glass-top: rgba(255, 255, 255, 0.2);
   --ax-glass-float:
     0 1px 2px rgba(0, 0, 0, 0.4),
     0 16px 40px -16px rgba(0, 0, 0, 0.65),
@@ -178,7 +180,7 @@
     0 1px 2px rgba(0, 0, 0, 0.4),
     0 16px 48px -16px rgba(0, 0, 0, 0.7),
     0 32px 96px -40px rgba(0, 0, 0, 0.75);
-  --ax-band: #070709;
+  --ax-band: #070911;
   --ax-band-border: rgba(255, 255, 255, 0.06);
 }
 
@@ -276,6 +278,18 @@
   background-size: 18px 18px;
 }
 
+/* tick ruler — the measurement strip along a stage's bottom edge.
+   1px ticks every 20px, a long tick every 100px, fading at both
+   ends so it reads as an instrument scale, not a border. */
+.ax-ruler {
+  height: 5px;
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.34) 0 1px, transparent 1px 100px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.14) 0 1px, transparent 1px 20px);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 14%, black 86%, transparent);
+  mask-image: linear-gradient(90deg, transparent, black 14%, black 86%, transparent);
+}
+
 /* film grain overlay */
 .ax-noise {
   position: relative;
@@ -297,8 +311,8 @@
    backdrop-filter blurs the glow into the glass. */
 .ax-glass {
   background: var(--ax-glass-bg);
-  -webkit-backdrop-filter: blur(14px) saturate(1.35);
-  backdrop-filter: blur(14px) saturate(1.35);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  backdrop-filter: blur(16px) saturate(1.4);
   box-shadow:
     inset 0 1px 0 var(--ax-glass-top),
     0 0 0 1px var(--ax-glass-line),
@@ -442,29 +456,29 @@
   filter: blur(110px);
 }
 .ax-aurora::before {
-  width: 640px;
-  height: 640px;
-  top: -320px;
+  width: 720px;
+  height: 720px;
+  top: -340px;
   left: 50%;
   translate: -50% 0;
   background: radial-gradient(circle, var(--ax-glow-a), transparent 65%);
   animation: ax-breathe-a 26s ease-in-out infinite;
 }
 .ax-aurora::after {
-  width: 520px;
-  height: 520px;
-  bottom: -300px;
+  width: 560px;
+  height: 560px;
+  bottom: -320px;
   left: 30%;
   background: radial-gradient(circle, var(--ax-glow-b), transparent 65%);
   animation: ax-breathe-b 34s ease-in-out infinite;
 }
 
 @keyframes ax-breathe-a {
-  0%, 100% { transform: translate(-50%, 0) scale(1); opacity: 0.9; }
+  0%, 100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
   50% { transform: translate(-46%, 40px) scale(1.12); opacity: 1; }
 }
 @keyframes ax-breathe-b {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.95; }
   50% { transform: translate(60px, -30px) scale(1.15); opacity: 1; }
 }
 

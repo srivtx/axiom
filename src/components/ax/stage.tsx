@@ -4,7 +4,8 @@
    Every demo is the real component, not a screenshot. */
 
 import React from "react";
-import { Sheen, Sweep, Halo, Notch, Pop, Candy } from "./buttons";
+import { cn } from "@/lib/utils";
+import { Sheen, Sweep, Halo, Notch, Pop, Candy, CheckoutBench } from "./buttons";
 import { FlipCycle, MorphStream, Cascade, Glitch, RollDigits } from "./textfx";
 import { Corona, Flux, TraceGrid, BeamLines, AuroraVeil } from "./ambience";
 import { PointerCard, HaloCard, StackDeck, VoiceCard } from "./cards";
@@ -52,16 +53,23 @@ export function DemoStage({
       return <Pop variant={variant} />;
     case "candy":
       return <Candy variant={variant} />;
+    case "checkout":
+      return (
+        <Scale big={big} amount={1.1}>
+          <CheckoutBench variant={variant} />
+        </Scale>
+      );
 
-    /* cards */
+    /* cards — small surfaces scale up on the big detail stage so a
+       single card still owns the space */
     case "pointercard":
-      return <PointerCard variant={variant} />;
+      return <Scale big={big} amount={1.15}><PointerCard variant={variant} /></Scale>;
     case "halocard":
-      return <HaloCard variant={variant} />;
+      return <Scale big={big} amount={1.15}><HaloCard variant={variant} /></Scale>;
     case "deck":
-      return <StackDeck variant={variant} />;
+      return <Scale big={big} amount={1.35}><StackDeck variant={variant} /></Scale>;
     case "voicecard":
-      return <VoiceCard variant={variant} />;
+      return <Scale big={big} amount={1.1}><VoiceCard variant={variant} /></Scale>;
 
     /* textfx */
     case "flipcycle":
@@ -121,7 +129,7 @@ export function DemoStage({
 
     /* showcase */
     case "playerdeck":
-      return <PlayerDeck variant={variant} />;
+      return <Scale big={big} amount={1.12}><PlayerDeck variant={variant} /></Scale>;
     case "orbitsys":
       return <OrbitSystem variant={variant} />;
     case "peekfolder":
@@ -132,4 +140,44 @@ export function DemoStage({
         <span className="text-sm text-neutral-500">missing demo: {comp}</span>
       );
   }
+}
+
+/* ── Scale — demo size compensation ──────────────────
+   Small surfaces get scaled up on the big detail stage (and scaled
+   to unity in catalogue tiles and rows), so a single card still
+   owns the space it sits in. */
+function Scale({
+  big,
+  amount,
+  children,
+}: {
+  big: boolean;
+  amount: number;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      className="flex items-center justify-center"
+      style={big ? { transform: `scale(${amount})` } : undefined}
+    >
+      {children}
+    </div>
+  );
+}
+
+/* ── StageTicks — the measured chrome ──────────────────────
+   Four registration marks frame the working area; a tick ruler
+   runs the bottom edge. Stages read as set surfaces — measured
+   space, not decoration. Purely presentational, never interactive. */
+export function StageTicks({ ruler = true }: { ruler?: boolean }) {
+  const b = "pointer-events-none absolute size-3 border-white/25";
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0">
+      <span className={cn(b, "left-2.5 top-2.5 border-l border-t")} />
+      <span className={cn(b, "right-2.5 top-2.5 border-r border-t")} />
+      <span className={cn(b, "bottom-2.5 left-2.5 border-b border-l")} />
+      <span className={cn(b, "bottom-2.5 right-2.5 border-b border-r")} />
+      {ruler && <span className="ax-ruler absolute inset-x-8 bottom-2.5" />}
+    </div>
+  );
 }

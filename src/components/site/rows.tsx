@@ -10,8 +10,9 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { DemoStage } from "@/components/ax/stage";
+import { DemoStage, StageTicks } from "@/components/ax/stage";
 import { ENTRIES, FAMILIES, COUNTS, entryPath, familyPath, type FamilyId } from "@/lib/registry";
+import { PHOTOS } from "@/lib/media";
 
 /* one demo composition per family — two or three live primitives
    share the stage so the family reads as a family, not a lone prop.
@@ -32,11 +33,7 @@ const ROWS: {
   {
     family: "buttons",
     headline: <>Controls with a physical response.</>,
-    demos: [
-      { comp: "sheen", variant: "violet" },
-      { comp: "halo", variant: "iris" },
-      { comp: "candy", variant: "rose" },
-    ],
+    demos: [{ comp: "checkout", variant: "violet" }],
   },
   {
     family: "cards",
@@ -205,6 +202,7 @@ export function FamilyRows({ families }: { families?: FamilyId[] }) {
                     no scale-press, the stage is a surface, not a button. */}
                 <div className="ax-stage ax-seat relative flex min-h-[19rem] items-center justify-center overflow-hidden rounded-2xl p-5 sm:min-h-[22rem] md:min-h-[24rem] md:p-8">
                   <div aria-hidden className="ax-dots absolute inset-0 opacity-40" />
+                  <StageTicks />
                   {/* stage volume — a bloom behind the demo cluster so the
                       surface reads as lit space around the specimens */}
                   <div
@@ -217,12 +215,29 @@ export function FamilyRows({ families }: { families?: FamilyId[] }) {
                       <DemoStage key={d.comp} comp={d.comp} variant={d.variant} big={row.big} />
                     ))}
                   </div>
+                  {/* ambience rows get a subject: a wallpaper preview seated
+                      on the background, so the glow frames real content */}
+                  {row.family === "ambience" && (
+                    <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
+                      <span className="relative block h-24 w-40 overflow-hidden rounded-xl shadow-[0_24px_48px_-16px_rgba(0,0,0,.8)] ring-1 ring-white/25">
+                        <img
+                          src={PHOTOS.coast}
+                          alt=""
+                          width={320}
+                          height={192}
+                          loading="lazy"
+                          draggable={false}
+                          className="h-full w-full object-cover"
+                        />
+                      </span>
+                    </div>
+                  )}
                   {/* corner chrome — island-local, stays light-on-dark;
                       both corners seat on the same fixed height */}
-                  <span className="absolute left-5 top-5 flex h-4 items-center ax-label text-white/60 transition-colors duration-500 group-hover:text-white/80">
+                  <span className="absolute left-6 top-6 flex h-4 items-center ax-label text-white/60 transition-colors duration-500 group-hover:text-white/80">
                     {row.family} / {lead.id}
                   </span>
-                  <span className="absolute right-5 top-5 flex h-4 items-center gap-2 ax-label text-white/60">
+                  <span className="absolute right-6 top-6 flex h-4 items-center gap-2 ax-label text-white/60">
                     <span className="size-1.5 animate-pulse rounded-full bg-emerald-400/70" />
                     live
                   </span>

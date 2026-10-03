@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DemoStage } from "@/components/ax/stage";
-import { Sheen } from "@/components/ax/buttons";
+import { RAIL } from "@/lib/media";
 import {
   ENTRIES,
   FAMILIES,
@@ -167,7 +167,7 @@ export function Catalogue({
             </p>
           )}
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-            {list.map((e) => (
+            {list.map((e, i) => (
               <motion.div
                 key={e.id}
                 initial={{ opacity: 0, y: 16 }}
@@ -196,15 +196,25 @@ export function Catalogue({
                   <div className="ax-stage relative flex h-56 items-center justify-center overflow-hidden rounded-t-2xl p-4 sm:h-60">
                     <div aria-hidden className="ax-dots absolute inset-0 opacity-55" />
                     {e.family === "ambience" ? (
-                      /* ambience demos are backgrounds — seat a specimen
-                         on them so the tile reads as a scene, not a void */
+                      /* ambience demos are backgrounds — seat a wallpaper
+                         preview on them so the tile reads as a scene */
                       <>
                         <DemoStage comp={e.id} variant={e.variants[0].id} tile />
-                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-                          <span className="ax-label text-white/60">{e.name}</span>
-                          <div className="scale-90">
-                            <SheenBtn />
-                          </div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="relative block h-[5.5rem] w-40 overflow-hidden rounded-xl shadow-[0_24px_48px_-16px_rgba(0,0,0,.8)] ring-1 ring-white/25">
+                            <img
+                              src={RAIL[i % RAIL.length]}
+                              alt=""
+                              width={320}
+                              height={220}
+                              loading="lazy"
+                              draggable={false}
+                              className="h-full w-full object-cover"
+                            />
+                            <span className="absolute inset-x-0 bottom-0 bg-black/55 py-1 text-center ax-label text-white/85 backdrop-blur-sm">
+                              {e.name}
+                            </span>
+                          </span>
                         </div>
                       </>
                     ) : (
@@ -258,12 +268,6 @@ export function Catalogue({
       </div>
     </div>
   );
-}
-
-/* a small live button seated on ambience tiles — turns a bare
-   background into a scene with content */
-function SheenBtn() {
-  return <Sheen variant="light" />;
 }
 
 function SideItem({

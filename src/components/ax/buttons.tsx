@@ -5,7 +5,7 @@
 
 import React, { useCallback, useRef } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Zap } from "lucide-react";
+import { ArrowRight, Sparkles, Zap, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /* ── Sheen ─────────────────────────────────────────────────── */
@@ -254,5 +254,47 @@ export function Candy({
       />
       <span className="relative z-10">{children}</span>
     </button>
+  );
+}
+
+/* ── CheckoutBench — the family in context ───────────────
+   Buttons do not float alone on a stage; they act inside a
+   surface. A release panel: build status, changelog rows, the
+   family's controls as its real actions. */
+const RELEASE_ROWS = [
+  { k: "motion tokens", v: "12 changed" },
+  { k: "stage lighting", v: "retuned" },
+  { k: "focus audit", v: "clean" },
+];
+
+export function CheckoutBench({ variant = "violet" }: { variant?: string }) {
+  return (
+    <div className="ax-glass relative w-80 rounded-xl p-5">
+      <div className="flex items-center justify-between">
+        <span className="font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-neutral-400">
+          release · v3.1.0
+        </span>
+        <span className="flex items-center gap-1.5 rounded-full bg-emerald-400/10 px-2 py-0.5 text-[10px] font-medium text-emerald-300 ring-1 ring-emerald-400/25">
+          <Check className="size-3" />
+          checks 12/12
+        </span>
+      </div>
+      <div className="mt-4 flex flex-col gap-2.5">
+        {RELEASE_ROWS.map((r) => (
+          <div key={r.k} className="flex items-center justify-between text-sm">
+            <span className="flex items-center gap-2 text-neutral-300">
+              <Check className="size-3.5 text-violet-300" />
+              {r.k}
+            </span>
+            <span className="font-mono text-[11px] text-neutral-500">{r.v}</span>
+          </div>
+        ))}
+      </div>
+      <div className="my-4 h-px bg-white/10" />
+      <div className="flex items-center gap-3">
+        <Sheen variant={variant}>Ship 3.1.0</Sheen>
+        <Halo variant="iris">Preview</Halo>
+      </div>
+    </div>
   );
 }

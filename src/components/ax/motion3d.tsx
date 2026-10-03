@@ -5,7 +5,9 @@
 
 import React, { useRef } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { Star, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { PHOTOS } from "@/lib/media";
 
 /* ── IsoStage ──────────────────────────────────────────────── */
 export function IsoStage({ variant = "slab", label = "ui" }: { variant?: string; label?: string }) {
@@ -66,8 +68,14 @@ function IsoSlab({ x, y, w, label }: { x: number; y: number; w: number; label: s
 }
 
 /* ── TiltCard ──────────────────────────────────────────────── */
-export function TiltCard({ variant = "badge", title = "Tilt Card" }: { variant?: string; title?: string }) {
-  const layered = variant === "badge";
+/* A real product card, not a specimen: photography, a price,
+   actions — content a user would actually see. The 3D recipe
+   stacks depth on the Z axis: media floats highest (100), body
+   mid (60), title (50), actions barely off the glass (20). */
+export function TiltCard({ variant = "badge", title }: { variant?: string; title?: string }) {
+  const layered = variant !== "flat";
+  const z = (v: number): React.CSSProperties =>
+    layered ? { transform: `translateZ(${v}px)`, transformStyle: "preserve-3d" } : {};
   const ref = useRef<HTMLDivElement>(null);
   const rx = useMotionValue(0);
   const ry = useMotionValue(0);
@@ -95,7 +103,7 @@ export function TiltCard({ variant = "badge", title = "Tilt Card" }: { variant?:
   };
 
   return (
-    <div className="flex w-full items-center justify-center py-8" style={{ perspective: 1000 }}>
+    <div className="group/tilt flex w-full items-center justify-center py-8" style={{ perspective: 1000 }}>
       <motion.div
         ref={ref}
         onPointerMove={onMove}
@@ -103,20 +111,58 @@ export function TiltCard({ variant = "badge", title = "Tilt Card" }: { variant?:
         tabIndex={0}
         whileHover={{ scale: 1.02 }}
         className={cn(
-          "relative flex h-56 w-full max-w-80 flex-col rounded-xl bg-[#0b0b10] p-6 pt-5",
+          "relative flex w-full max-w-80 flex-col rounded-xl bg-[#0b0b10] p-5",
           "ring-1 ring-white/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/60",
         )}
         style={{ rotateX: srx, rotateY: sry, transformStyle: "preserve-3d" }}
       >
         <motion.div aria-hidden className="pointer-events-none absolute inset-0 rounded-xl opacity-70" style={{ background: glowBg }} />
-        <div className="relative z-10" style={layered ? { transform: "translateZ(40px)" } : undefined}>
-          <span className="font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-neutral-400">{title}</span>
+        {/* route line — the eyebrow */}
+        <div className="relative z-10 flex items-center justify-between" style={z(50)}>
+          <span className="flex items-center gap-1.5 font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-neutral-400">
+            <MapPin className="size-3 text-violet-300" />
+            {title ?? "valais · swiss alps"}
+          </span>
+          <span className="flex items-center gap-1 text-xs font-medium text-neutral-300">
+            <Star className="size-3 fill-amber-400 text-amber-400" />
+            4.9
+          </span>
         </div>
-        <div className="relative z-10 mt-auto pb-1" style={layered ? { transform: "translateZ(24px)" } : undefined}>
-          <p className="text-lg font-semibold tracking-tight text-neutral-100">Capped at 8 degrees</p>
-          <p className="mt-1 text-sm leading-relaxed text-neutral-300">
-            Pointer tilt with spring damping — depth without the gimmick.
+        {/* the media plane — highest Z, catches the most parallax */}
+        <div className="relative z-10 mt-3 overflow-hidden rounded-lg" style={z(100)}>
+          <img
+            src={PHOTOS.ridge}
+            alt="Alpine ridgeline at first light"
+            width={640}
+            height={360}
+            loading="lazy"
+            className="h-40 w-full object-cover transition-shadow duration-300 group-hover/tilt:shadow-[0_24px_48px_-16px_rgba(139,92,246,.45)]"
+          />
+          <span className="absolute inset-0 ring-1 ring-inset ring-white/15" />
+        </div>
+        {/* body copy */}
+        <div className="relative z-10 mt-4" style={z(60)}>
+          <p className="text-lg font-semibold leading-tight tracking-tight text-neutral-100">
+            Four days above the treeline
           </p>
+          <p className="mt-1 text-sm leading-relaxed text-neutral-400">
+            A hut-to-hut traverse with two guides, morning starts, and no phone signal for the middle two days.
+          </p>
+        </div>
+        {/* actions — barely off the glass */}
+        <div className="relative z-10 mt-5 flex items-center justify-between" style={z(20)}>
+          <span className="flex items-baseline gap-1.5">
+            <span className="text-[15px] font-semibold tracking-tight text-neutral-50">$1,240</span>
+            <span className="text-xs text-neutral-500">per person</span>
+          </span>
+          <span className="flex items-center gap-2">
+            <span className="rounded-lg px-3 py-1.5 text-xs font-medium text-neutral-300 transition-colors group-hover/tilt:text-neutral-100">
+              Route
+            </span>
+            <span className="rounded-lg bg-neutral-100 px-3.5 py-1.5 text-xs font-semibold text-neutral-900 transition-shadow group-hover/tilt:shadow-[0_8px_20px_-6px_rgba(255,255,255,.4)]">
+              Book
+            </span>
+          </span>
         </div>
       </motion.div>
     </div>

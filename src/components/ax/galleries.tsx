@@ -5,16 +5,12 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { RAIL } from "@/lib/media";
 
 /* ── OrbitGallery ──────────────────────────────────────────── */
-const ORBIT_ITEMS = [
-  { id: "pr", label: "primitives" },
-  { id: "st", label: "stages" },
-  { id: "fx", label: "effects" },
-  { id: "nv", label: "nav" },
-  { id: "ld", label: "loaders" },
-  { id: "in", label: "inputs" },
-];
+/* Landscape photography on an elliptical orbit — depth fog and
+   scale sell the z-axis; drag to spin, auto otherwise. */
+const ORBIT_ITEMS = RAIL;
 
 export function OrbitGallery({ variant = "auto" }: { variant?: string }) {
   const auto = variant === "auto";
@@ -61,7 +57,7 @@ export function OrbitGallery({ variant = "auto" }: { variant?: string }) {
     >
       <div className="absolute rounded-full ring-1 ring-white/8" style={{ width: R * 2, height: R * 2 }} />
       <div className="absolute size-2 rounded-full bg-violet-400 shadow-[0_0_16px_rgba(139,92,246,.8)]" />
-      {ORBIT_ITEMS.map((item, i) => {
+      {ORBIT_ITEMS.map((src, i) => {
         const theta = angle * (Math.PI / 180) + (i / ORBIT_ITEMS.length) * Math.PI * 2;
         const x = sig(Math.cos(theta) * R);
         const y = sig(Math.sin(theta) * R * 0.32);
@@ -73,7 +69,7 @@ export function OrbitGallery({ variant = "auto" }: { variant?: string }) {
         const fy = y >= 0 ? `calc(-50% + ${Math.abs(y)}px)` : `calc(-50% - ${Math.abs(y)}px)`;
         return (
           <div
-            key={item.id}
+            key={i}
             className="absolute"
             style={{
               transform: `translate(${fx}, ${fy}) scale(${scale})`,
@@ -82,8 +78,16 @@ export function OrbitGallery({ variant = "auto" }: { variant?: string }) {
               filter: `blur(${blur}px)`,
             }}
           >
-            <span className="flex h-14 w-28 items-center justify-center rounded-lg bg-[#10101a] text-xs font-medium tracking-tight text-neutral-200 ring-1 ring-white/12 shadow-lg">
-              {item.label}
+            <span className="relative block h-14 w-28 overflow-hidden rounded-lg shadow-lg ring-1 ring-white/20">
+              <img
+                src={src}
+                alt=""
+                width={224}
+                height={112}
+                loading="lazy"
+                draggable={false}
+                className="h-full w-full object-cover"
+              />
             </span>
           </div>
         );
@@ -94,8 +98,7 @@ export function OrbitGallery({ variant = "auto" }: { variant?: string }) {
 
 
 /* ── DiagonalRail ──────────────────────────────────────────── */
-const RAIL_CARDS = ["corona", "sheen", "tilt", "flux", "halo", "glitch", "ribbon", "orbit", "deck", "cascade"];
-
+/* A skewed double rail of photography — the archive wall. */
 export function DiagonalRail({ variant = "pair" }: { variant?: string }) {
   const solo = variant === "solo";
   return (
@@ -109,12 +112,20 @@ export function DiagonalRail({ variant = "pair" }: { variant?: string }) {
         {[false, true].slice(0, solo ? 1 : 2).map((rev, rowIdx) => (
           <div key={rowIdx} className="ax-marquee-host flex overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_12%,black_88%,transparent)]">
             <div className={cn("flex w-max gap-4 pr-4", rev ? "ax-marquee-rev" : "ax-marquee")}>
-              {[...RAIL_CARDS, ...RAIL_CARDS].map((c, i) => (
+              {[...RAIL, ...RAIL].map((src, i) => (
                 <span
                   key={`${rowIdx}-${i}`}
-                  className="flex h-14 items-center rounded-lg bg-[#10101a]/90 px-6 text-sm font-medium text-neutral-300 ring-1 ring-white/10 backdrop-blur"
+                  className="relative block h-16 w-24 shrink-0 overflow-hidden rounded-lg ring-1 ring-white/15"
                 >
-                  {c}
+                  <img
+                    src={src}
+                    alt=""
+                    width={192}
+                    height={128}
+                    loading="lazy"
+                    draggable={false}
+                    className="h-full w-full object-cover"
+                  />
                 </span>
               ))}
             </div>

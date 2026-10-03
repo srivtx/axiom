@@ -18,7 +18,7 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { DemoStage } from "@/components/ax/stage";
+import { DemoStage, StageTicks } from "@/components/ax/stage";
 import {
   entryPath,
   familyLabel,
@@ -171,14 +171,23 @@ export function DetailView({
               </div>
               <div className="ax-stage relative flex min-h-[22rem] items-center justify-center p-5 sm:min-h-[30rem] sm:p-8">
                 <div aria-hidden className="ax-dots absolute inset-0 opacity-60" />
+                <StageTicks />
+                {/* stage volume — the same bloom the home rows seat
+                    behind their clusters; without it the stage is a
+                    surface, with it the stage is a lit space */}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute left-1/2 top-1/2 h-80 w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-80 blur-3xl"
+                  style={{ background: "radial-gradient(circle, var(--ax-glow-a), transparent 62%)" }}
+                />
                 <div className="relative z-10 flex w-full items-center justify-center">
                   <DemoStage comp={entry.id} variant={variant} big />
                 </div>
                 {/* corner chrome — same instrument language as the home rows */}
-                <span className="absolute bottom-5 left-5 flex h-4 items-center ax-label text-white/55">
+                <span className="absolute bottom-6 left-6 flex h-4 items-center ax-label text-white/55">
                   {entry.family} / {entry.id}
                 </span>
-                <span className="absolute bottom-5 right-5 flex h-4 items-center gap-2 ax-label text-white/55">
+                <span className="absolute bottom-6 right-6 flex h-4 items-center gap-2 ax-label text-white/55">
                   <span className="size-1.5 animate-pulse rounded-full bg-emerald-400/70" />
                   live
                 </span>

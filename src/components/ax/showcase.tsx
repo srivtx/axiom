@@ -4,10 +4,12 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Play, Pause, SkipBack, SkipForward, Volume2, Folder, FileText } from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Volume2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { PHOTOS, RAIL } from "@/lib/media";
 
 /* ── PlayerDeck ────────────────────────────────────────────── */
+/* A real listening surface: album art, artist, elapsed time. */
 export function PlayerDeck({ variant = "rest" }: { variant?: string }) {
   const [playing, setPlaying] = useState(variant === "play");
   const [t, setT] = useState(38);
@@ -15,29 +17,25 @@ export function PlayerDeck({ variant = "rest" }: { variant?: string }) {
   return (
     <div className="flex w-full max-w-80 flex-col gap-4 rounded-2xl bg-[#0b0b10] p-5 ring-1 ring-white/10">
       <div className="flex items-center gap-4">
-        <div className="relative size-20 shrink-0">
-          <div
-            className="absolute inset-0 rounded-full"
-            style={{
-              background:
-                "conic-gradient(from 0deg, #191922 0deg, #191922 300deg, rgba(139,92,246,.5) 340deg, #191922 360deg)",
-              boxShadow: "inset 0 0 0 1px rgba(255,255,255,.1)",
-            }}
+        <div className="relative size-20 shrink-0 overflow-hidden rounded-lg">
+          <img
+            src={PHOTOS.night}
+            alt="Album cover — night over the ridgeline"
+            width={160}
+            height={160}
+            loading="lazy"
+            className={cn("h-full w-full object-cover", playing && "animate-[ax-pulse-art_3.2s_ease-in-out_infinite]")}
           />
-          <div
-            className="absolute inset-2.5 rounded-full"
-            style={{
-              background:
-                "radial-gradient(circle at 34% 30%, rgba(232,121,249,.9), rgba(139,92,246,.75) 45%, #12121a 75%)",
-              animation: playing ? "ax-disc 8s linear infinite" : undefined,
-            }}
-          >
-            <span className="absolute inset-[42%] rounded-full bg-[#0b0b10] ring-1 ring-white/20" />
-          </div>
+          <span className="absolute inset-0 ring-1 ring-inset ring-white/20" />
+          <span
+            aria-hidden
+            className="absolute inset-0 rounded-lg"
+            style={{ background: "linear-gradient(135deg, rgba(139,92,246,.25), transparent 55%)" }}
+          />
         </div>
         <div className="min-w-0">
-          <p className="truncate text-sm font-semibold tracking-tight text-neutral-100">Glass Discipline</p>
-          <p className="truncate text-xs text-neutral-500">axiom · ambient works</p>
+          <p className="truncate text-sm font-semibold tracking-tight text-neutral-100">First Light (Arpette)</p>
+          <p className="truncate text-xs text-neutral-500">noe alvarez · field recordings</p>
           <div className="mt-2 flex items-end gap-[3px]" aria-hidden>
             {[7, 12, 5, 14, 9, 11, 6].map((h, i) => (
               <span
@@ -96,7 +94,7 @@ export function PlayerDeck({ variant = "rest" }: { variant?: string }) {
         <Volume2 className="ml-2 size-4 text-neutral-500" />
       </div>
       <style>{`
-        @keyframes ax-disc { to { transform: rotate(360deg); } }
+        @keyframes ax-pulse-art { 0%,100%{ filter: brightness(1) saturate(1);} 50%{ filter: brightness(1.14) saturate(1.18);} }
         @keyframes ax-eq { from { transform: scaleY(.4);} to { transform: scaleY(1);} }
       `}</style>
     </div>
@@ -172,6 +170,7 @@ export function OrbitSystem({ variant = "five" }: { variant?: string }) {
 }
 
 /* ── PeekFolder ────────────────────────────────────────────── */
+/* A camera roll: the folder fans its latest frames on hover. */
 export function PeekFolder({ variant = "sheets" }: { variant?: string }) {
   const [open, setOpen] = useState(false);
   const tabs = variant === "tabs";
@@ -183,7 +182,7 @@ export function PeekFolder({ variant = "sheets" }: { variant?: string }) {
         onMouseEnter={() => setOpen(true)}
         onMouseLeave={() => setOpen(false)}
       >
-        {/* fanned sheets */}
+        {/* fanned frames — real photography, tucked into the roll */}
         {sheets.map((i) => (
           <motion.div
             key={i}
@@ -203,20 +202,35 @@ export function PeekFolder({ variant = "sheets" }: { variant?: string }) {
             transition={{ delay: i * 0.04, type: "spring", stiffness: 300, damping: 24 }}
           >
             <div
-              className="h-full w-full rounded-md"
+              className={cn(
+                "h-full w-full overflow-hidden rounded-md",
+                tabs ? "bg-[#14141b]" : "bg-[#101014]",
+              )}
               style={{
-                background: tabs
-                  ? `linear-gradient(135deg, rgba(${90 + i * 40},${60 + i * 30},${160 + i * 20},.9), rgba(20,20,30,.9))`
-                  : `linear-gradient(135deg, rgba(30,30,42,.95), rgba(20,20,28,.95))`,
-                boxShadow: "inset 0 0 0 1px rgba(255,255,255,.12)",
+                boxShadow: "inset 0 0 0 1px rgba(255,255,255,.14), 0 12px 28px -12px rgba(0,0,0,.8)",
               }}
             >
               {tabs ? (
-                <span className="block h-3 w-10 rounded-b-md" style={{ background: `rgba(${150 + i * 30},${120 + i * 30},${220},.9)` }} />
-              ) : (
-                <span className="grid h-full w-full place-items-center">
-                  <FileText className="size-5 text-neutral-600" />
+                <span className="flex h-full w-full flex-col gap-1 p-1.5">
+                  <span
+                    className="h-2.5 w-10 rounded-sm"
+                    style={{ background: `rgba(${150 + i * 25},${120 + i * 25},220,.85)` }}
+                  />
+                  <span className="font-mono text-[8px] uppercase tracking-widest text-neutral-500">
+                    dsc_{4200 + i * 37}
+                  </span>
+                  <span className="mt-auto h-px w-full bg-white/10" />
                 </span>
+              ) : (
+                <img
+                  src={RAIL[i % RAIL.length]}
+                  alt=""
+                  width={232}
+                  height={168}
+                  loading="lazy"
+                  draggable={false}
+                  className="h-full w-full object-cover"
+                />
               )}
             </div>
           </motion.div>
@@ -235,10 +249,10 @@ export function PeekFolder({ variant = "sheets" }: { variant?: string }) {
             style={{ background: "#1d1d29", boxShadow: "inset 0 1px 0 rgba(255,255,255,.14)" }}
           />
           <div className="flex h-full items-end gap-2 px-5 pb-3">
-            <Folder className="size-4 text-violet-300" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-neutral-500">
-              {open ? "open" : "hover me"}
+            <span className="font-mono text-[10px] font-medium uppercase tracking-[0.24em] text-neutral-500">
+              {open ? "24 frames" : "camera roll"}
             </span>
+            <span className="mb-0.5 size-1 rounded-full bg-violet-400/80" />
           </div>
         </div>
       </div>
