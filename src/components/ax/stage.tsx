@@ -19,23 +19,25 @@ export function DemoStage({
   comp,
   variant,
   big = false,
+  tile = false,
 }: {
   comp: string;
   variant: string;
   big?: boolean;
+  tile?: boolean;
 }) {
   switch (comp) {
     /* ambience */
     case "corona":
-      return <Corona variant={variant} className={big ? "h-96 w-full" : "h-full w-full"} />;
+      return <Corona variant={variant} quiet={tile} className={big ? "h-96 w-full" : "h-full w-full"} />;
     case "flux":
-      return <Flux variant={variant} className={big ? "h-96 w-full" : "h-full w-full"} />;
+      return <Flux variant={variant} quiet={tile} className={big ? "h-96 w-full" : "h-full w-full"} />;
     case "tracegrid":
-      return <TraceGrid variant={variant} className={big ? "h-96 w-full" : "h-full w-full"} />;
+      return <TraceGrid variant={variant} quiet={tile} className={big ? "h-96 w-full" : "h-full w-full"} />;
     case "beamlines":
-      return <BeamLines variant={variant} className={big ? "h-96 w-full" : "h-full w-full"} />;
+      return <BeamLines variant={variant} quiet={tile} className={big ? "h-96 w-full" : "h-full w-full"} />;
     case "auroraveil":
-      return <AuroraVeil variant={variant} className={big ? "h-96 w-full" : "h-full w-full"} />;
+      return <AuroraVeil variant={variant} quiet={tile} className={big ? "h-96 w-full" : "h-full w-full"} />;
 
     /* buttons */
     case "sheen":

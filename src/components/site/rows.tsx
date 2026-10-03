@@ -35,7 +35,7 @@ const ROWS: {
     demos: [
       { comp: "sheen", variant: "violet" },
       { comp: "halo", variant: "iris" },
-      { comp: "notchbtn", variant: "tl" },
+      { comp: "candy", variant: "rose" },
     ],
   },
   {
@@ -205,6 +205,13 @@ export function FamilyRows({ families }: { families?: FamilyId[] }) {
                     no scale-press, the stage is a surface, not a button. */}
                 <div className="ax-stage ax-seat relative flex min-h-[19rem] items-center justify-center overflow-hidden rounded-2xl p-5 sm:min-h-[22rem] md:min-h-[24rem] md:p-8">
                   <div aria-hidden className="ax-dots absolute inset-0 opacity-40" />
+                  {/* stage volume — a bloom behind the demo cluster so the
+                      surface reads as lit space around the specimens */}
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute left-1/2 top-1/2 h-72 w-[72%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-80 blur-3xl"
+                    style={{ background: "radial-gradient(circle, var(--ax-halo-a), transparent 62%)" }}
+                  />
                   <div className="relative z-10 flex w-full flex-wrap items-center justify-center gap-x-10 gap-y-8">
                     {row.demos.map((d) => (
                       <DemoStage key={d.comp} comp={d.comp} variant={d.variant} big={row.big} />
@@ -212,10 +219,10 @@ export function FamilyRows({ families }: { families?: FamilyId[] }) {
                   </div>
                   {/* corner chrome — island-local, stays light-on-dark;
                       both corners seat on the same fixed height */}
-                  <span className="absolute left-5 top-5 flex h-4 items-center ax-label text-white/50 transition-colors duration-500 group-hover:text-white/70">
+                  <span className="absolute left-5 top-5 flex h-4 items-center ax-label text-white/60 transition-colors duration-500 group-hover:text-white/80">
                     {row.family} / {lead.id}
                   </span>
-                  <span className="absolute right-5 top-5 flex h-4 items-center gap-2 ax-label text-white/50">
+                  <span className="absolute right-5 top-5 flex h-4 items-center gap-2 ax-label text-white/60">
                     <span className="size-1.5 animate-pulse rounded-full bg-emerald-400/70" />
                     live
                   </span>

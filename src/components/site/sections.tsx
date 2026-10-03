@@ -48,7 +48,7 @@ export function Nav() {
         >
           <span
             className="relative grid size-7 place-items-center rounded-lg"
-            style={{ background: "linear-gradient(135deg, #8b5cf6, #d946ef)" }}
+            style={{ background: "linear-gradient(135deg, #6366f1, #0ea5e9)" }}
           >
             <span className="absolute inset-[1.5px] rounded-[6px] bg-[#0a0a0e]" />
             <span className="relative font-semibold text-[13px] leading-none text-neutral-100">
@@ -56,7 +56,7 @@ export function Nav() {
             </span>
           </span>
           <span className="text-[15px] font-semibold tracking-tight text-foreground">axiom</span>
-          <span className="hidden rounded-md bg-primary/10 px-1.5 py-0.5 font-mono text-[10px] font-medium text-primary ring-1 ring-primary/20 sm:block">
+          <span className="hidden self-center rounded-md bg-primary/10 px-1.5 py-0.5 font-mono text-[10px] font-medium leading-none text-primary ring-1 ring-primary/20 sm:block">
             v3
           </span>
         </Link>
@@ -160,12 +160,12 @@ export function Footer() {
   return (
     <footer className="mt-auto border-t border-border bg-background">
       <div className="mx-auto flex max-w-7xl flex-col gap-10 px-5 py-14 sm:px-6 lg:px-10">
-        <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-[1.6fr_1fr_1fr]">
           <div className="flex flex-col gap-3.5">
             <span className="flex items-center gap-2.5">
               <span
                 className="relative grid size-7 place-items-center rounded-lg"
-                style={{ background: "linear-gradient(135deg, #8b5cf6, #d946ef)" }}
+                style={{ background: "linear-gradient(135deg, #6366f1, #0ea5e9)" }}
               >
                 <span className="absolute inset-[1.5px] rounded-[6px] bg-[#0a0a0e]" />
                 <span className="relative font-semibold text-[13px] leading-none text-neutral-100">
@@ -194,15 +194,6 @@ export function Footer() {
               { label: "Changelog", href: "/changelog" },
               { label: "GitHub", href: "https://github.com/srivtx/axiom" },
               { label: "License · MIT", href: "https://github.com/srivtx/axiom#license" },
-            ]}
-          />
-          <FooterCol
-            title="Colophon"
-            links={[
-              { label: "Geist", href: "/docs#stack" },
-              { label: "Tailwind v4", href: "/docs#stack" },
-              { label: "framer-motion 12", href: "/docs#stack" },
-              { label: "TypeScript strict", href: "/docs#stack" },
             ]}
           />
         </div>

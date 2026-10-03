@@ -1,11 +1,13 @@
 "use client";
 
-/* axiom / hero — 44/56 split. The stage is a dark island holding a
-   living collage: the tilt specimen at center, satellites on their
-   own float clocks, the whole field answering the pointer with
-   depth parallax. The FIELD tile is not decoration — it reads the
-   actual spring values driving the parallax. Every tile is a real
-   technique from the library — the hero demos the product. */
+/* axiom / hero — copy left, a floating instrument cluster right.
+   No stage box: the cluster sits in open space on the page's own
+   atmosphere. Every pane is glass with its own halo behind it, the
+   whole field answers the pointer in depth, and each pane rides
+   an idle float on its own clock. The FIELD tile reads the actual
+   spring values driving the parallax — an instrument, not an
+   ornament. Every pane is a real technique from the library; the
+   hero demos the product. */
 
 import React, { useRef } from "react";
 import Link from "next/link";
@@ -29,10 +31,9 @@ const fade = (delay: number) => ({
   transition: { duration: 0.55, delay, ease: [0.21, 0.6, 0.35, 1] as const },
 });
 
-/* one satellite chrome — every float tile shares this exact recipe,
-   so the cluster reads as one instrument, not mixed leftovers */
-const SATELLITE =
-  "rounded-xl bg-white/[0.03] ring-1 ring-white/10 backdrop-blur-sm shadow-[0_16px_40px_-18px_rgba(0,0,0,0.75)]";
+/* halo color passed to .ax-halo via --ax-halo */
+const HALO_VIOLET = "var(--ax-halo-a)" as const;
+const HALO_SKY = "var(--ax-halo-b)" as const;
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -76,7 +77,7 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden">
       <div aria-hidden className="ax-aurora" />
-      <div aria-hidden className="ax-grid absolute inset-0 opacity-70 sm:opacity-100" />
+      <div aria-hidden className="ax-grid absolute inset-0 opacity-60 sm:opacity-90" />
 
       <div className="relative mx-auto grid min-h-[calc(100svh-4rem)] max-w-7xl items-center gap-12 px-5 pb-24 pt-20 sm:px-6 lg:grid-cols-[44%_56%] lg:gap-0 lg:pb-28 lg:px-10 lg:pt-24">
         {/* ── copy column ─────────────────────────────────── */}
@@ -89,7 +90,7 @@ export function Hero() {
               href="/changelog"
               className="group relative inline-flex w-fit max-w-full items-center gap-2.5 rounded-full bg-secondary py-1 pl-2 pr-4 ring-1 ring-border transition-colors hover:ring-ring/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <span className="flex h-6 shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 px-2.5 text-[11px] font-semibold text-white">
+              <span className="flex h-6 shrink-0 items-center gap-1.5 rounded-full bg-gradient-to-r from-indigo-500 to-sky-500 px-2.5 text-[11px] font-semibold text-white">
                 v3
               </span>
               <span className="truncate text-xs font-medium tracking-tight text-muted-foreground">
@@ -101,28 +102,26 @@ export function Hero() {
 
           <motion.h1
             {...fade(0.08)}
-            className="text-balance text-[2.35rem] font-semibold leading-[1.08] tracking-[-0.03em] text-foreground sm:text-5xl sm:leading-[1.05] xl:text-[3.4rem]"
+            className="text-balance text-[2.35rem] font-semibold leading-[1.06] tracking-[-0.03em] text-foreground sm:text-5xl sm:leading-[1.04] xl:text-[3.4rem]"
           >
-            Precision-cut
+            Components that
             <br />
-            <span className="ax-grad">interface primitives</span>
-            <br />
-            for product surfaces.
+            <span className="ax-grad">demo themselves.</span>
           </motion.h1>
 
           <motion.p
             {...fade(0.16)}
-            className="max-w-md text-pretty text-[15px] leading-relaxed tracking-tight text-muted-foreground"
+            className="max-w-md text-pretty text-[15px] leading-relaxed tracking-tight text-muted-foreground dark:text-foreground/75"
           >
-            Every stage is the component itself — live, interactive, zero
-            screenshots. {COUNTS.entries} primitives, {COUNTS.families} families,
-            each with its own page and variant forms.
+            {COUNTS.entries} motion-built React primitives. Every stage on this
+            site is the real component — live, interactive, ready to ship. No
+            screenshots, no mockups, nothing faked.
           </motion.p>
 
           <motion.div {...fade(0.24)} className="flex flex-wrap items-center gap-3">
             <Link
               href="/library"
-              className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-foreground px-6 text-[15px] font-semibold text-background shadow-lg shadow-foreground/20 transition-all duration-200 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.98] sm:w-auto"
+              className="ax-sheen group inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-foreground px-6 text-[15px] font-semibold text-background shadow-lg shadow-foreground/20 transition-all duration-200 hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.98] sm:w-auto"
             >
               Browse the library
               <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -131,7 +130,7 @@ export function Hero() {
               href="https://github.com/srivtx/axiom"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-card px-6 text-[15px] font-semibold text-foreground ring-1 ring-foreground/15 shadow-sm transition-all duration-200 hover:bg-accent hover:shadow-md hover:ring-foreground/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.98] sm:w-auto"
+              className="ax-glass inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg px-6 text-[15px] font-semibold text-foreground transition-all duration-200 hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.98] sm:w-auto"
             >
               <Github className="size-4" />
               View on GitHub
@@ -149,61 +148,96 @@ export function Hero() {
             <span className="hidden h-3.5 w-px bg-border sm:block" />
             <span>TypeScript strict</span>
             <span className="hidden h-3.5 w-px bg-border sm:block" />
-            <span>Tailwind v4</span>
-            <span className="hidden h-3.5 w-px bg-border sm:block" />
             <span>0 raster images</span>
           </motion.div>
         </div>
 
-        {/* ── stage column — the living collage ──────────── */}
+        {/* ── scene column — the open floating cluster ──── */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.15, ease: [0.21, 0.6, 0.35, 1] }}
-          className="ax-stage ax-seat relative h-[440px] overflow-hidden rounded-2xl sm:h-[500px] lg:h-[560px]"
+          initial={{ opacity: 0, scale: 0.94, y: 24 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.12, ease: [0.21, 0.6, 0.35, 1] }}
+          className="relative h-[420px] sm:h-[500px] lg:h-[580px]"
+          style={{ perspective: 1400 }}
         >
           <div
             ref={stageRef}
             onPointerMove={onMove}
             onPointerLeave={reset}
             className="absolute inset-0"
-            style={{ perspective: 1400 }}
           >
-            {/* vignette + floor glow */}
+            {/* ambient scene light — two large blooms owning the space,
+                not any one pane. Violet above the cluster, sky below. */}
             <div
               aria-hidden
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background:
-                  "radial-gradient(circle at 50% 62%, rgba(139,92,246,.13), transparent 45%), radial-gradient(circle at 50% 120%, rgba(232,121,249,.1), transparent 55%)",
-              }}
+              className="pointer-events-none absolute left-1/2 top-[38%] h-[380px] w-[380px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-70 blur-3xl"
+              style={{ background: "radial-gradient(circle, var(--ax-halo-a), transparent 60%)" }}
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute bottom-[2%] right-[6%] h-52 w-64 rounded-full opacity-60 blur-3xl"
+              style={{ background: "radial-gradient(circle, var(--ax-halo-b), transparent 60%)" }}
             />
 
-            {/* the tilt cluster — tilts with the pointer */}
+            {/* studio floor — a perspective grid receding below the
+                cluster. Grounds the float without boxing it in. */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-[-30%] bottom-[-6%] h-[46%] opacity-80"
+              style={{
+                transform: "perspective(600px) rotateX(58deg)",
+                transformOrigin: "50% 0%",
+                maskImage: "linear-gradient(to bottom, transparent, black 16%, transparent 94%)",
+                WebkitMaskImage: "linear-gradient(to bottom, transparent, black 16%, transparent 94%)",
+              }}
+            >
+              <div className="ax-gridlite absolute inset-0" />
+            </div>
+
             <motion.div
               className="absolute inset-0"
               style={{ rotateX: crx, rotateY: cry, transformStyle: "preserve-3d" }}
             >
-              {/* center — the tilt specimen (real component, hover it) */}
+              {/* center — the tilt specimen, halo behind, altitude below */}
               <motion.div
                 style={{ x: cardX, y: cardY }}
-                className="absolute left-1/2 top-1/2 w-[72%] max-w-[340px] -translate-x-1/2 -translate-y-1/2 sm:w-[60%] lg:w-[64%]"
+                className="absolute left-1/2 top-1/2 w-[74%] max-w-[350px] -translate-x-1/2 -translate-y-1/2"
               >
-                <div className="scale-[0.82] [filter:drop-shadow(0_28px_48px_rgba(0,0,0,0.55))] sm:scale-90 lg:scale-100">
-                  <TiltCard variant="badge" title="axiom / specimen" />
-                </div>
+                <Float dur={10} amp={7} reduce={!!reduce}>
+                  <div className="relative [filter:drop-shadow(0_28px_56px_rgba(0,0,0,0.45))]">
+                    <span
+                      aria-hidden
+                      className="ax-halo"
+                      style={{ "--ax-halo": HALO_VIOLET } as React.CSSProperties}
+                    />
+                    <div className="scale-[0.84] sm:scale-90 lg:scale-100">
+                      <TiltCard variant="badge" title="axiom / specimen" />
+                    </div>
+                  </div>
+                </Float>
               </motion.div>
 
-              {/* satellite — kinetic type (upper left) */}
+              {/* satellite — kinetic type (upper left), tilted pane —
+                  the specimen sits in a dark window so the type reads
+                  in both themes */}
               <motion.div
-                style={{ x: flipX, y: flipY }}
-                className="absolute left-[6%] top-[12%] hidden sm:block lg:left-[8%]"
+                style={{ x: flipX, y: flipY, rotate: -3 }}
+                className="absolute left-[4%] top-[9%] hidden sm:block lg:left-[5%]"
               >
                 <Float dur={11} amp={8} reduce={!!reduce}>
-                  <div className={`${SATELLITE} overflow-hidden px-4 py-3.5`}>
-                    <p className="ax-label text-white/45">kinetic type</p>
-                    <div className="mt-1 origin-left scale-[0.58]">
-                      <FlipCycle variant="slow" text="type" />
+                  <div className="relative rotate-[-1.5deg]">
+                    <span
+                      aria-hidden
+                      className="ax-halo"
+                      style={{ "--ax-halo": HALO_SKY } as React.CSSProperties}
+                    />
+                    <div className="ax-glass rounded-xl px-4 py-3.5">
+                      <p className="ax-label text-muted-foreground">kinetic type</p>
+                      <div className="mt-1.5 overflow-hidden rounded-lg bg-[#0a0a11] p-2 ring-1 ring-white/10">
+                        <div className="origin-left scale-[0.58]">
+                          <FlipCycle variant="slow" text="type" />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </Float>
@@ -211,26 +245,41 @@ export function Hero() {
 
               {/* satellite — live field telemetry (upper right).
                   Reports the actual spring values driving this
-                  collage — an instrument, not an ornament. */}
+                  cluster — an instrument, not an ornament. */}
               <motion.div
-                style={{ x: teleX, y: teleY }}
-                className="absolute right-[5%] top-[14%] hidden sm:block lg:right-[8%] lg:top-[15%]"
+                style={{ x: teleX, y: teleY, rotate: 2.5 }}
+                className="absolute right-[4%] top-[12%] hidden sm:block lg:right-[5%] lg:top-[14%]"
               >
                 <Float dur={13} amp={10} reduce={!!reduce}>
-                  <FieldTile sx={sx} sy={sy} />
+                  <div className="relative rotate-[1deg]">
+                    <span
+                      aria-hidden
+                      className="ax-halo"
+                      style={{ "--ax-halo": HALO_VIOLET } as React.CSSProperties}
+                    />
+                    <FieldTile sx={sx} sy={sy} />
+                  </div>
                 </Float>
               </motion.div>
 
-              {/* satellite — avatar deck (lower left) */}
+              {/* satellite — avatar deck (lower left), tucked clear of
+                  the specimen so the overlap reads as depth, not error */}
               <motion.div
-                style={{ x: deckX, y: deckY }}
-                className="absolute bottom-[13%] left-[6%] hidden sm:block lg:bottom-[14%] lg:left-[8%]"
+                style={{ x: deckX, y: deckY, rotate: -4 }}
+                className="absolute bottom-[7%] left-[2%] hidden sm:block lg:bottom-[8%] lg:left-[3%]"
               >
                 <Float dur={9} amp={6} reduce={!!reduce}>
-                  <div className={`${SATELLITE} w-44 overflow-hidden px-2 py-1.5`}>
-                    <p className="px-1.5 pt-1 ax-label text-white/45">stack deck</p>
-                    <div className="origin-top scale-[0.72]">
-                      <StackDeck variant="avatars" />
+                  <div className="relative">
+                    <span
+                      aria-hidden
+                      className="ax-halo"
+                      style={{ "--ax-halo": HALO_SKY } as React.CSSProperties}
+                    />
+                    <div className="ax-glass w-44 rounded-xl px-2 py-1.5">
+                      <p className="px-1.5 pt-1 ax-label text-muted-foreground">stack deck</p>
+                      <div className="origin-top scale-[0.72]">
+                        <StackDeck variant="avatars" />
+                      </div>
                     </div>
                   </div>
                 </Float>
@@ -238,20 +287,27 @@ export function Hero() {
 
               {/* satellite — beam chip (lower right) */}
               <motion.div
-                style={{ x: beamX, y: beamY }}
-                className="absolute bottom-[13%] right-[7%] hidden sm:block lg:bottom-[14%] lg:right-[9%]"
+                style={{ x: beamX, y: beamY, rotate: 3 }}
+                className="absolute bottom-[10%] right-[6%] hidden sm:block lg:bottom-[12%] lg:right-[8%]"
               >
                 <Float dur={15} amp={7} reduce={!!reduce}>
-                  <div className="relative rounded-full bg-white/[0.03] px-4 py-2.5 ring-1 ring-white/10 backdrop-blur-sm shadow-[0_16px_40px_-18px_rgba(0,0,0,0.75)]">
+                  <div className="relative">
                     <span
                       aria-hidden
-                      className="ax-beam rounded-full"
-                      style={{ "--beam-dur": "4.5s" } as React.CSSProperties}
+                      className="ax-halo"
+                      style={{ "--ax-halo": HALO_VIOLET } as React.CSSProperties}
                     />
-                    <span className="relative flex items-center gap-2 ax-label text-white/60">
-                      <span className="size-1.5 animate-pulse rounded-full bg-emerald-400/80" />
-                      every tile live
-                    </span>
+                    <div className="relative rounded-full bg-secondary/70 px-4 py-2.5 ring-1 ring-border backdrop-blur-md">
+                      <span
+                        aria-hidden
+                        className="ax-beam rounded-full"
+                        style={{ "--beam-dur": "4.5s" } as React.CSSProperties}
+                      />
+                      <span className="relative flex items-center gap-2 ax-label text-muted-foreground">
+                        <span className="size-1.5 animate-pulse rounded-full bg-emerald-400/80" />
+                        every tile live
+                      </span>
+                    </div>
                   </div>
                 </Float>
               </motion.div>
@@ -259,25 +315,12 @@ export function Hero() {
 
             {/* mobile row — two satellites under the card */}
             <div className="absolute inset-x-8 bottom-16 flex items-center justify-center gap-8 sm:hidden">
-              <div className="scale-[0.55] origin-center">
+              <div className="scale-[0.55] origin-center overflow-hidden rounded-lg bg-[#0a0a11] p-2 ring-1 ring-white/10">
                 <FlipCycle variant="slow" text="type" />
               </div>
               <FieldTile sx={sx} sy={sy} compact />
             </div>
           </div>
-
-          {/* stage label — instructional, one line, mono, quiet */}
-          <span className="absolute bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap ax-label text-white/50">
-            hover the card · it tilts
-          </span>
-
-          <style>{`
-            @keyframes ax-hero-orb {
-              0% { transform: rotate(0deg) scale(1); }
-              50% { transform: rotate(180deg) scale(.62); }
-              100% { transform: rotate(360deg) scale(1); }
-            }
-          `}</style>
         </motion.div>
       </div>
     </section>
@@ -286,7 +329,7 @@ export function Hero() {
 
 /* ── field telemetry tile ─────────────────────────────────
    Renders the live spring inputs as tabular numerals. The hero
-   advertises "the field answers" — this tile proves it. */
+   is alive — this tile proves it with the actual numbers. */
 function FieldTile({
   sx,
   sy,
@@ -301,20 +344,16 @@ function FieldTile({
   const fx = useTransform(sx, fmt);
   const fy = useTransform(sy, fmt);
   return (
-    <div
-      className={`${
-        compact ? "px-3.5 py-2.5" : "px-4 py-3.5"
-      } ${SATELLITE}`}
-    >
-      <p className="ax-label text-white/45">field</p>
-      <div className="mt-2 flex items-center justify-between gap-6 font-mono text-xs tabular-nums font-medium leading-none text-white/80">
+    <div className={`ax-glass ${compact ? "px-3.5 py-2.5" : "px-4 py-3.5"} rounded-xl`}>
+      <p className="ax-label text-muted-foreground">field</p>
+      <div className="mt-2 flex items-center justify-between gap-6 font-mono text-xs tabular-nums font-semibold leading-none">
         <span className="flex items-center gap-1.5">
-          <span className="text-white/45">x</span>
-          <motion.span className="text-violet-300">{fx}</motion.span>
+          <span className="text-muted-foreground/80">x</span>
+          <motion.span className="text-primary">{fx}</motion.span>
         </span>
         <span className="flex items-center gap-1.5">
-          <span className="text-white/45">y</span>
-          <motion.span className="text-fuchsia-300">{fy}</motion.span>
+          <span className="text-muted-foreground/80">y</span>
+          <motion.span className="text-sky-500 dark:text-sky-400">{fy}</motion.span>
         </span>
       </div>
     </div>
@@ -367,7 +406,7 @@ export function StackMarquee() {
       <div className="ax-marquee flex w-max items-center gap-12 pr-12">
         {[...items, ...items].map((it, i) => (
           <span key={i} className="flex items-center gap-3 text-xs font-medium tracking-tight text-muted-foreground">
-            <span className="size-1 rounded-full bg-primary/50" />
+            <span className="size-1 rounded-full bg-primary/60" />
             {it}
           </span>
         ))}

@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DemoStage } from "@/components/ax/stage";
+import { Sheen } from "@/components/ax/buttons";
 import {
   ENTRIES,
   FAMILIES,
@@ -66,7 +67,7 @@ export function Catalogue({
               open any tile for its page.
             </p>
           </div>
-          <label className="group flex h-11 w-full max-w-xs items-center gap-2.5 rounded-xl bg-secondary px-4 ring-1 ring-border transition-[box-shadow] focus-within:ring-2 focus-within:ring-ring sm:w-72">
+          <label className="ax-glass group flex h-11 w-full max-w-xs items-center gap-2.5 rounded-xl px-4 transition-[box-shadow] focus-within:ring-2 focus-within:ring-ring sm:w-72">
             <Search className="size-4 shrink-0 text-muted-foreground" />
             <input
               value={q}
@@ -176,10 +177,16 @@ export function Catalogue({
               >
                 <Link
                   href={entryPath(e)}
+                  onMouseMove={(ev) => {
+                    /* feed the spotlight its cursor position */
+                    const r = ev.currentTarget.getBoundingClientRect();
+                    ev.currentTarget.style.setProperty("--mx", `${ev.clientX - r.left}px`);
+                    ev.currentTarget.style.setProperty("--my", `${ev.clientY - r.top}px`);
+                  }}
                   className={cn(
-                    "group relative flex h-full flex-col overflow-hidden rounded-2xl bg-card text-left",
-                    "ring-1 ring-border transition-all duration-200",
-                    "hover:-translate-y-1 hover:ring-ring/50",
+                    "ax-spot ax-hairline group relative flex h-full flex-col overflow-hidden rounded-2xl bg-card text-left",
+                    "transition-all duration-200",
+                    "hover:-translate-y-1",
                     "shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_-12px_rgba(0,0,0,0.08)] hover:shadow-[0_2px_4px_rgba(0,0,0,0.05),0_16px_40px_-16px_rgba(0,0,0,0.14)]",
                     "dark:shadow-[0_1px_2px_rgba(0,0,0,0.4),0_16px_48px_-20px_rgba(0,0,0,0.8)] dark:hover:shadow-[0_2px_4px_rgba(0,0,0,0.5),0_24px_64px_-24px_rgba(0,0,0,0.95)]",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
@@ -187,12 +194,26 @@ export function Catalogue({
                 >
                   {/* demo viewport — the dark island */}
                   <div className="ax-stage relative flex h-56 items-center justify-center overflow-hidden rounded-t-2xl p-4 sm:h-60">
-                    <div aria-hidden className="ax-dots absolute inset-0 opacity-50" />
-                    <div className="relative z-10 flex w-full items-center justify-center">
-                      <DemoStage comp={e.id} variant={e.variants[0].id} />
-                    </div>
+                    <div aria-hidden className="ax-dots absolute inset-0 opacity-55" />
+                    {e.family === "ambience" ? (
+                      /* ambience demos are backgrounds — seat a specimen
+                         on them so the tile reads as a scene, not a void */
+                      <>
+                        <DemoStage comp={e.id} variant={e.variants[0].id} tile />
+                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
+                          <span className="ax-label text-white/60">{e.name}</span>
+                          <div className="scale-90">
+                            <SheenBtn />
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="relative z-10 flex w-full items-center justify-center">
+                        <DemoStage comp={e.id} variant={e.variants[0].id} />
+                      </div>
+                    )}
                     {e.isNew && (
-                      <span className="absolute left-4 top-4 rounded-md bg-violet-500/15 px-2 py-1 ax-label text-violet-300 ring-1 ring-violet-400/30 backdrop-blur-sm">
+                      <span className="absolute left-4 top-4 rounded-md bg-indigo-500/15 px-2 py-1 ax-label text-indigo-300 ring-1 ring-indigo-400/30 backdrop-blur-sm">
                         new
                       </span>
                     )}
@@ -200,7 +221,7 @@ export function Catalogue({
                   {/* footer */}
                   <div className="flex flex-1 items-start justify-between gap-4 p-5">
                     <div className="min-w-0">
-                      <p className="ax-label text-muted-foreground">{e.family}</p>
+                      <p className="ax-label text-muted-foreground dark:text-foreground/60">{e.family}</p>
                       <h2 className="mt-2 text-[15px] font-semibold tracking-tight text-foreground">
                         {e.name}
                       </h2>
@@ -239,6 +260,12 @@ export function Catalogue({
   );
 }
 
+/* a small live button seated on ambience tiles — turns a bare
+   background into a scene with content */
+function SheenBtn() {
+  return <Sheen variant="light" />;
+}
+
 function SideItem({
   engaged,
   label,
@@ -269,7 +296,7 @@ function SideItem({
         "group/side relative flex items-center justify-between gap-3 rounded-lg px-3 py-2 text-sm transition-colors duration-200",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
         engaged
-          ? "bg-accent font-medium text-foreground ring-1 ring-border"
+          ? "bg-primary/15 font-medium text-foreground ring-1 ring-primary/25"
           : "text-muted-foreground hover:bg-secondary/70 hover:text-foreground",
       )}
     >

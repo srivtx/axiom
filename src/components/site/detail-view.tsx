@@ -169,11 +169,19 @@ export function DetailView({
                   live
                 </span>
               </div>
-              <div className="ax-stage relative flex min-h-[19rem] items-center justify-center p-5 sm:min-h-[27rem] sm:p-8">
-                <div aria-hidden className="ax-dots absolute inset-0 opacity-50" />
+              <div className="ax-stage relative flex min-h-[22rem] items-center justify-center p-5 sm:min-h-[30rem] sm:p-8">
+                <div aria-hidden className="ax-dots absolute inset-0 opacity-60" />
                 <div className="relative z-10 flex w-full items-center justify-center">
                   <DemoStage comp={entry.id} variant={variant} big />
                 </div>
+                {/* corner chrome — same instrument language as the home rows */}
+                <span className="absolute bottom-5 left-5 flex h-4 items-center ax-label text-white/55">
+                  {entry.family} / {entry.id}
+                </span>
+                <span className="absolute bottom-5 right-5 flex h-4 items-center gap-2 ax-label text-white/55">
+                  <span className="size-1.5 animate-pulse rounded-full bg-emerald-400/70" />
+                  live
+                </span>
               </div>
             </div>
           </div>

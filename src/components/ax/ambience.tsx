@@ -6,7 +6,15 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 /* ── Corona ────────────────────────────────────────────────── */
-export function Corona({ variant = "mono", className }: { variant?: string; className?: string }) {
+export function Corona({
+  variant = "mono",
+  className,
+  quiet = false,
+}: {
+  variant?: string;
+  className?: string;
+  quiet?: boolean;
+}) {
   const violet = variant === "violet";
   return (
     <div className={cn("ax-noise relative overflow-hidden rounded-xl ring-1 ring-white/10", className)}>
@@ -33,18 +41,28 @@ export function Corona({ variant = "mono", className }: { variant?: string; clas
           filter: "blur(10px)",
         }}
       />
-      <div className="relative z-10 flex h-full min-h-40 items-center justify-center">
-        <span className="rounded-full bg-black/50 px-4 py-1.5 text-xs font-medium tracking-wide text-neutral-300 backdrop-blur">
-          {violet ? "axiom · primary light" : "axiom · quiet light"}
-        </span>
-      </div>
+      {!quiet && (
+        <div className="relative z-10 flex h-full min-h-40 items-center justify-center">
+          <span className="rounded-full bg-black/50 px-4 py-1.5 text-xs font-medium tracking-wide text-neutral-300 backdrop-blur">
+            {violet ? "axiom · primary light" : "axiom · quiet light"}
+          </span>
+        </div>
+      )}
       <style>{`@keyframes ax-spin-slow { to { transform: rotate(360deg); } }`}</style>
     </div>
   );
 }
 
 /* ── Flux ──────────────────────────────────────────────────── */
-export function Flux({ variant = "dusk", className }: { variant?: string; className?: string }) {
+export function Flux({
+  variant = "dusk",
+  className,
+  quiet = false,
+}: {
+  variant?: string;
+  className?: string;
+  quiet?: boolean;
+}) {
   const ember = variant === "ember";
   return (
     <div className={cn("ax-noise relative overflow-hidden rounded-xl ring-1 ring-white/10", className)}>
@@ -69,11 +87,13 @@ export function Flux({ variant = "dusk", className }: { variant?: string; classN
           }}
         />
       ))}
-      <div className="relative z-10 flex h-full min-h-40 items-center justify-center">
-        <span className="text-sm font-medium tracking-tight text-neutral-200">
-          {ember ? "ember drift" : "dusk drift"}
-        </span>
-      </div>
+      {!quiet && (
+        <div className="relative z-10 flex h-full min-h-40 items-center justify-center">
+          <span className="text-sm font-medium tracking-tight text-neutral-200">
+            {ember ? "ember drift" : "dusk drift"}
+          </span>
+        </div>
+      )}
       <style>{`
         @keyframes ax-drift-a { to { transform: translate(60px, 40px) scale(1.15); } }
         @keyframes ax-drift-b { to { transform: translate(-70px, 50px) scale(.9); } }
@@ -85,7 +105,15 @@ export function Flux({ variant = "dusk", className }: { variant?: string; classN
 }
 
 /* ── TraceGrid ─────────────────────────────────────────────── */
-export function TraceGrid({ variant = "wide", className }: { variant?: string; className?: string }) {
+export function TraceGrid({
+  variant = "wide",
+  className,
+  quiet = false,
+}: {
+  variant?: string;
+  className?: string;
+  quiet?: boolean;
+}) {
   const macro = variant === "macro";
   return (
     <div className={cn("ax-noise relative overflow-hidden rounded-xl ring-1 ring-white/10", className)}>
@@ -118,26 +146,38 @@ export function TraceGrid({ variant = "wide", className }: { variant?: string; c
           @keyframes tg-draw { to { stroke-dashoffset: 0; } }
         `}</style>
       </svg>
-      <div className="relative z-10 flex h-full min-h-40 items-end justify-start p-5">
-        <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-neutral-400">
-          trace · {macro ? "macro" : "wide"}
-        </span>
-      </div>
+      {!quiet && (
+        <div className="relative z-10 flex h-full min-h-40 items-end justify-start p-5">
+          <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-neutral-400">
+            trace · {macro ? "macro" : "wide"}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
 
 /* ── BeamLines ─────────────────────────────────────────────── */
-export function BeamLines({ variant = "single", className }: { variant?: string; className?: string }) {
+export function BeamLines({
+  variant = "single",
+  className,
+  quiet = false,
+}: {
+  variant?: string;
+  className?: string;
+  quiet?: boolean;
+}) {
   const duo = variant === "duo";
   return (
     <div className={cn("ax-noise relative overflow-hidden rounded-xl bg-[#07070a] ring-1 ring-white/10", className)}>
-      <div className="relative z-10 flex h-full min-h-40 flex-col items-center justify-center gap-3 text-neutral-300">
-        <span className="text-sm font-medium tracking-tight">section body</span>
-        <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-neutral-500">
-          edges carry the light
-        </span>
-      </div>
+      {!quiet && (
+        <div className="relative z-10 flex h-full min-h-40 flex-col items-center justify-center gap-3 text-neutral-300">
+          <span className="text-sm font-medium tracking-tight">section body</span>
+          <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-neutral-500">
+            edges carry the light
+          </span>
+        </div>
+      )}
       <div aria-hidden className="absolute inset-x-0 top-0 h-px overflow-visible">
         <span
           className="absolute top-0 h-px w-40"
@@ -173,7 +213,15 @@ export function BeamLines({ variant = "single", className }: { variant?: string;
 }
 
 /* ── AuroraVeil ────────────────────────────────────────────── */
-export function AuroraVeil({ variant = "standard", className }: { variant?: string; className?: string }) {
+export function AuroraVeil({
+  variant = "standard",
+  className,
+  quiet = false,
+}: {
+  variant?: string;
+  className?: string;
+  quiet?: boolean;
+}) {
   const polar = variant === "polar";
   return (
     <div className={cn("ax-noise relative overflow-hidden rounded-xl ring-1 ring-white/10", className)}>
@@ -199,11 +247,13 @@ export function AuroraVeil({ variant = "standard", className }: { variant?: stri
           animation: "ax-veil-b 34s ease-in-out infinite",
         }}
       />
-      <div className="relative z-10 flex h-full min-h-40 items-center justify-center">
-        <span className="text-lg font-medium tracking-tight text-neutral-100">
-          {polar ? "polar wash" : "signature wash"}
-        </span>
-      </div>
+      {!quiet && (
+        <div className="relative z-10 flex h-full min-h-40 items-center justify-center">
+          <span className="text-lg font-medium tracking-tight text-neutral-100">
+            {polar ? "polar wash" : "signature wash"}
+          </span>
+        </div>
+      )}
       <style>{`
         @keyframes ax-veil-a { 0%,100%{ transform: translate(-50%,0) scale(1);} 50%{ transform: translate(-46%,-30px) scale(1.14);} }
         @keyframes ax-veil-b { 0%,100%{ transform: translate(0,0) scale(1);} 50%{ transform: translate(46px,26px) scale(1.18);} }

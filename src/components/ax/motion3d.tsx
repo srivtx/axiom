@@ -110,11 +110,11 @@ export function TiltCard({ variant = "badge", title = "Tilt Card" }: { variant?:
       >
         <motion.div aria-hidden className="pointer-events-none absolute inset-0 rounded-xl opacity-70" style={{ background: glowBg }} />
         <div className="relative z-10" style={layered ? { transform: "translateZ(40px)" } : undefined}>
-          <span className="font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-neutral-500">{title}</span>
+          <span className="font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-neutral-400">{title}</span>
         </div>
         <div className="relative z-10 mt-auto pb-1" style={layered ? { transform: "translateZ(24px)" } : undefined}>
           <p className="text-lg font-semibold tracking-tight text-neutral-100">Capped at 8 degrees</p>
-          <p className="mt-1 text-sm leading-relaxed text-neutral-400">
+          <p className="mt-1 text-sm leading-relaxed text-neutral-300">
             Pointer tilt with spring damping — depth without the gimmick.
           </p>
         </div>
